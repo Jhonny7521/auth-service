@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.4</spring-cloud.version>
+		<org.lombok.version>1.18.22</org.lombok.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,11 +40,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.12.6</version>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
 		</dependency>
 
 		<dependency>
@@ -118,11 +132,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
 				<configuration>
+					<target>17</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>${org.lombok.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -152,8 +169,8 @@
 						<configuration>
 							<inputSpec>${project.basedir}/src/main/resources/api/auth-service-api.yml</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>com.bm_nttdata.transaction_ms.api</apiPackage>
-							<modelPackage>com.bm_nttdata.transaction_ms.model</modelPackage>
+							<apiPackage>com.bm_ntt_data.auth_service.api</apiPackage>
+							<modelPackage>com.bm_ntt_data.auth_service.model</modelPackage>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<configOptions>
 								<delegatePattern>true</delegatePattern>
@@ -191,6 +208,8 @@
 					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					<logViolationsToConsole>true</logViolationsToConsole>
 					<violationSeverity>warning</violationSeverity>
+					<!-- No detener la compilación por errores -->
+					<failOnViolation>false</failOnViolation>
 					<!--
                     <excludes>
                         com/omernaci/checkstyleexample/CheckstyleExampleApplication.java

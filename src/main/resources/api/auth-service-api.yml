@@ -4,7 +4,7 @@ info:
   description: API para la gestion de autenticacion de usuarios
   version: 1.0.0
 servers:
-  - url: http://localhost:8092/api/v1
+  - url: http://localhost:8086/api/v1
     description: Local development server
 paths:
   /auth/create:
@@ -25,7 +25,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthUserDto'
+                $ref: '#/components/schemas/AuthUserResponseDto'
         '400':
           description: Invalid request
 
@@ -81,6 +81,19 @@ components:
         - userName
         - password
       properties:
+        userName:
+          type: string
+          description: Nombre de usuario
+        password:
+          type: string
+          description: password de usuario
+
+    AuthUserResponseDto:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: identificador de usuario
         userName:
           type: string
           description: Nombre de usuario
