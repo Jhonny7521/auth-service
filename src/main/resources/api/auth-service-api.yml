@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Auth Service API
+  description: API para la gestion de autenticacion de usuarios
+  version: 1.0.0
+servers:
+  - url: http://localhost:8092/api/v1
+    description: Local development server
+paths:
+  /auth/create:
+    post:
+      tags:
+        - Auth
+      summary: Create User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUserDto'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthUserDto'
+        '400':
+          description: Invalid request
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: User login
+      operationId: userLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthUserDto'
+      responses:
+        '200':
+          description: Successful user login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+        '400':
+          description: Invalid request
+
+  /auth/validate:
+    post:
+      tags:
+        - Auth
+      summary: Token Validate
+      operationId: tokenValidate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenDto'
+      responses:
+        '200':
+          description: Valid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenDto'
+        '400':
+          description: Invalid token
+
+components:
+  schemas:
+    AuthUserDto:
+      type: object
+      required:
+        - userName
+        - password
+      properties:
+        userName:
+          type: string
+          description: Nombre de usuario
+        password:
+          type: string
+          description: password de usuario
+
+    TokenDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: Identificador de cliente
+        accountType:
+          type: string
+          enum: [SAVINGS, CHECKING, FIXED_TERM, SAVINGS_VIP, CHECKING_PYME]
+          description: Tipo de cuenta bancaria
