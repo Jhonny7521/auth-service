@@ -91,10 +91,6 @@ components:
     TokenDto:
       type: object
       properties:
-        customerId:
+        token:
           type: string
-          description: Identificador de cliente
-        accountType:
-          type: string
-          enum: [SAVINGS, CHECKING, FIXED_TERM, SAVINGS_VIP, CHECKING_PYME]
-          description: Tipo de cuenta bancaria
+          description: token de autenticacion
